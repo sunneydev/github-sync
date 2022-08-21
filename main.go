@@ -9,11 +9,16 @@ import (
 
 func main() {
 	http.HandleFunc("/webhook", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("exec Command `git pull`")
 		err := exec.Command("git", "pull").Run()
 		if err != nil {
 			fmt.Println(err)
 		}
+
+		w.Write([]byte("OK"))
+	})
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("OK"))
 	})
 
 	PORT := os.Getenv("PORT")
