@@ -10,7 +10,10 @@ import (
 func main() {
 	http.HandleFunc("/webhook", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("exec Command `git pull`")
-		exec.Command("git", "pull").Run()
+		err := exec.Command("git", "pull").Run()
+		if err != nil {
+			fmt.Println(err)
+		}
 	})
 
 	PORT := os.Getenv("PORT")
@@ -19,5 +22,8 @@ func main() {
 		PORT = "5555"
 	}
 
-	http.ListenAndServe(fmt.Sprintf(":%s", PORT), nil)
+	err := http.ListenAndServe(fmt.Sprintf(":%s", PORT), nil)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
