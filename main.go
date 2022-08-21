@@ -10,7 +10,7 @@ import (
 func main() {
 	http.HandleFunc("/webhook", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("exec Command `git pull`")
-		exec.Command("git", "pull").Output()
+		exec.Command("git", "pull").Run()
 	})
 
 	PORT := os.Getenv("PORT")
